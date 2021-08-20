@@ -58,11 +58,15 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "kitty", NULL };
+static const char *termcmd[]  = { "xterm", NULL };
 static const char *volupcmd[] = { "amixer", "-D", "pulse", "sset", "Master", "5%+", NULL };
 static const char *voldowncmd[] = { "amixer", "-D", "pulse", "sset", "Master", "5%-", NULL };
 static const char *bupcmd[] = { "brightnessctl", "-d", "intel_backlight", "set", "5%+" };
 static const char *bdowncmd[] = { "brightnessctl", "-d", "intel_backlight", "set", "5%-" };
+static const char *skipcmd[]  = { "mpc", "next", NULL };
+static const char *prevcmd[]  = { "mpc", "prev", NULL };
+static const char *playcmd[]  = { "mpc", "play", NULL };
+static const char *pausecmd[]  = { "mpc", "pause", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -73,6 +77,10 @@ static Key keys[] = {
 	{ MODKEY,			XK_l,	   spawn,	   {.v = voldowncmd } },
 	{ MODKEY|ShiftMask,		XK_o,	   spawn,	   {.v = bupcmd } },
 	{ MODKEY|ShiftMask,		XK_l,	   spawn,	   {.v = bdowncmd } },
+	{ MODKEY|ControlMask|ShiftMask,		XK_a,	   spawn,	   {.v = playcmd } },
+	{ MODKEY|ControlMask|ShiftMask,		XK_s,	   spawn,	   {.v = pausecmd } },
+	{ MODKEY|ControlMask|ShiftMask,		XK_z,	   spawn,	   {.v = prevcmd } },
+	{ MODKEY|ControlMask|ShiftMask,		XK_x,	   spawn,	   {.v = skipcmd } },
 	{ MODKEY,                       XK_Tab,    focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_u,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = -1 } },
@@ -81,9 +89,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Tab,    zoom,           {0} },
 	{ MODKEY,                       XK_v,      view,           {0} },
 	{ MODKEY,           		XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_z,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_x,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_6,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_7,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_8,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -97,9 +105,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
